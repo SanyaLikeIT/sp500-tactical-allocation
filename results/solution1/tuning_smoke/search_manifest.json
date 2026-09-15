@@ -1,0 +1,145 @@
+{
+  "status": "complete",
+  "smoke": true,
+  "seed": 42,
+  "n_trials": 2,
+  "n_folds": 5,
+  "search_space": {
+    "n_estimators": [
+      300,
+      2000
+    ],
+    "learning_rate": [
+      0.01,
+      0.07,
+      "log"
+    ],
+    "max_depth": [
+      3,
+      8
+    ],
+    "num_leaves": [
+      8,
+      "min(128, 2**max_depth)"
+    ],
+    "min_child_samples": [
+      20,
+      300
+    ],
+    "min_split_gain": [
+      0.0,
+      0.001
+    ],
+    "reg_alpha": [
+      1e-05,
+      0.1,
+      "log"
+    ],
+    "reg_lambda": [
+      0.001,
+      10.0,
+      "log"
+    ],
+    "subsample": [
+      0.6,
+      1.0
+    ],
+    "colsample_bytree": [
+      0.6,
+      1.0
+    ]
+  },
+  "early_stopping": {
+    "inner_rows": 180,
+    "gap": 1,
+    "patience": 50,
+    "metric": "rmse"
+  },
+  "objective": "Mean outer-development Adjusted Sharpe; all five folds required.",
+  "selection_rule": "Maximum mean CV Adjusted Sharpe; no threshold tuning.",
+  "deployment_tree_rule": "Integer median of selected trial's five inner best iterations.",
+  "dataset_sha256": "8c1aba83e1bf34f91b234b7979f1fc7c397186b33a8d08bdd3634c08eb3810ca",
+  "development_rows": 8868,
+  "holdout_accessed": false,
+  "fold_boundaries": [
+    {
+      "train_end": 7966,
+      "inner_train_end": 7785,
+      "stopping_start": 7787,
+      "stopping_end": 7966,
+      "validation_start": 7968,
+      "validation_end": 8147
+    },
+    {
+      "train_end": 8146,
+      "inner_train_end": 7965,
+      "stopping_start": 7967,
+      "stopping_end": 8146,
+      "validation_start": 8148,
+      "validation_end": 8327
+    },
+    {
+      "train_end": 8326,
+      "inner_train_end": 8145,
+      "stopping_start": 8147,
+      "stopping_end": 8326,
+      "validation_start": 8328,
+      "validation_end": 8507
+    },
+    {
+      "train_end": 8506,
+      "inner_train_end": 8325,
+      "stopping_start": 8327,
+      "stopping_end": 8506,
+      "validation_start": 8508,
+      "validation_end": 8687
+    },
+    {
+      "train_end": 8686,
+      "inner_train_end": 8505,
+      "stopping_start": 8507,
+      "stopping_end": 8686,
+      "validation_start": 8688,
+      "validation_end": 8867
+    }
+  ],
+  "packages": {
+    "Mako": "1.4.1",
+    "MarkupSafe": "3.0.3",
+    "PyYAML": "6.0.3",
+    "Pygments": "2.21.0",
+    "SQLAlchemy": "2.0.54",
+    "alembic": "1.20.0",
+    "cloudpickle": "3.1.2",
+    "colorlog": "6.12.0",
+    "greenlet": "3.5.6",
+    "iniconfig": "2.3.0",
+    "joblib": "1.6.0",
+    "lightgbm": "4.7.0",
+    "narwhals": "2.26.0",
+    "numpy": "2.5.3",
+    "optuna": "5.0.0",
+    "packaging": "26.3",
+    "pandas": "3.0.5",
+    "pip": "24.0",
+    "pluggy": "1.6.0",
+    "pytest": "9.1.1",
+    "python-dateutil": "2.9.0.post0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "threadpoolctl": "3.6.0",
+    "tqdm": "4.70.1",
+    "typing_extensions": "4.16.0"
+  },
+  "source_hashes": {
+    "src/metrics.py": "1d8fe7139ae9d6dbf2c6becf7d8464522df6a392bbe1a118cc91691d5d14ae44",
+    "src/solution1.py": "203eb0a42d7a232afb1cc27c652430becce437c18d948d7d8777625b58b97c76",
+    "src/validation.py": "36a1f854f8345c2187661faf386def7be0cdb1e197ecab2f74f6898bc57e8692",
+    "src/solution1_tuning.py": "05ed4f2c021d62e174237350196d195bf54dd628b3ebdf81a4608d3e9b781960",
+    "scripts/tune_solution1.py": "89521306bbd3dfcb55f972471793a93d0fc7a68bd25cca2b503f18336188aa80"
+  },
+  "elapsed_seconds": 4.561777533002896,
+  "best_trial": 1,
+  "best_value": 0.5027774863148659
+}

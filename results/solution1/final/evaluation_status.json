@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "configuration_sha256": "a27a5212495aad97d7d6f52c991e94fc61f92cc1fb3f0bbfde031b763691710f",
+  "completed_models": [
+    "baseline",
+    "improved"
+  ],
+  "dataset_sha256": "8c1aba83e1bf34f91b234b7979f1fc7c397186b33a8d08bdd3634c08eb3810ca",
+  "evaluation_source_sha256": "51b78332fe325c0b93bb7d06bffd606c14f165d3e01c7476dfde31cb5160be7b"
+}

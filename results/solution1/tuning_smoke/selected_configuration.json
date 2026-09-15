@@ -1,0 +1,78 @@
+{
+  "status": "frozen",
+  "smoke": true,
+  "trial": 1,
+  "parameters": {
+    "max_depth": 3,
+    "num_leaves": 8,
+    "n_estimators": 64,
+    "learning_rate": 0.05052375775428282,
+    "min_child_samples": 79,
+    "min_split_gain": 0.00018182496720710062,
+    "reg_alpha": 5.415244119402538e-05,
+    "reg_lambda": 0.016480446427978974,
+    "subsample": 0.8099025726528951,
+    "colsample_bytree": 0.7727780074568463
+  },
+  "final_n_estimators": 37,
+  "threshold": 0.0,
+  "dataset_sha256": "8c1aba83e1bf34f91b234b7979f1fc7c397186b33a8d08bdd3634c08eb3810ca",
+  "cv_metrics": {
+    "adjusted_sharpe": {
+      "mean": 0.5027774863148659,
+      "std": 0.911670285155113,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "raw_sharpe": {
+      "mean": 0.5487795862769409,
+      "std": 0.8959426778755534,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "r2": {
+      "mean": 0.0002022496111645955,
+      "std": 0.012142683973729947,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "spearman": {
+      "mean": 0.03214988549879426,
+      "std": 0.10814876530154074,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "rmse": {
+      "mean": 0.01021217771885442,
+      "std": 0.0031850432755566767,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "strategy_volatility": {
+      "mean": 0.11827525497531326,
+      "std": 0.05924484699878219,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "cumulative_return": {
+      "mean": 0.06734005747295377,
+      "std": 0.08694588305764611,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "max_drawdown": {
+      "mean": 0.07244122389816114,
+      "std": 0.04872712802455471,
+      "valid_folds": 5,
+      "total_folds": 5
+    }
+  },
+  "holdout_accessed": false,
+  "source_hashes": {
+    "src/metrics.py": "1d8fe7139ae9d6dbf2c6becf7d8464522df6a392bbe1a118cc91691d5d14ae44",
+    "src/solution1.py": "203eb0a42d7a232afb1cc27c652430becce437c18d948d7d8777625b58b97c76",
+    "src/validation.py": "36a1f854f8345c2187661faf386def7be0cdb1e197ecab2f74f6898bc57e8692",
+    "src/solution1_tuning.py": "05ed4f2c021d62e174237350196d195bf54dd628b3ebdf81a4608d3e9b781960",
+    "scripts/tune_solution1.py": "89521306bbd3dfcb55f972471793a93d0fc7a68bd25cca2b503f18336188aa80"
+  }
+}

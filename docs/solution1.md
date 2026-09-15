@@ -2,6 +2,11 @@
 
 ## Scope
 
+Stage 4 follow-up: tuning and final evaluation have now completed. See
+[the tuning protocol](solution1_tuning.md) and the root README for the comparison.
+The descriptions below retain the Stage 3 baseline experiment's scope; its saved
+CV files are preserved, and later holdout results live in a separate directory.
+
 Stage 3 implements the external single-LightGBM solution in `src/solution1.py`
 and evaluates it through `scripts/reproduce_solution1.py`. It is a
 **methodologically corrected local reproduction**, not an improved model and not

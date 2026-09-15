@@ -1,0 +1,78 @@
+{
+  "status": "frozen",
+  "smoke": false,
+  "trial": 10,
+  "parameters": {
+    "max_depth": 3,
+    "num_leaves": 8,
+    "n_estimators": 724,
+    "learning_rate": 0.028502386445081143,
+    "min_child_samples": 150,
+    "min_split_gain": 0.0008325076947404105,
+    "reg_alpha": 1.4209969789341111e-05,
+    "reg_lambda": 4.071570699987008,
+    "subsample": 0.7200142681676905,
+    "colsample_bytree": 0.7877444618791577
+  },
+  "final_n_estimators": 61,
+  "threshold": 0.0,
+  "dataset_sha256": "8c1aba83e1bf34f91b234b7979f1fc7c397186b33a8d08bdd3634c08eb3810ca",
+  "cv_metrics": {
+    "adjusted_sharpe": {
+      "mean": 1.0077054789136712,
+      "std": 0.8419355674270921,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "raw_sharpe": {
+      "mean": 1.0267113688550062,
+      "std": 0.8751706278437951,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "r2": {
+      "mean": 0.0006140144147118498,
+      "std": 0.008623267778541195,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "spearman": {
+      "mean": 0.07016185101266316,
+      "std": 0.08104548674565029,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "rmse": {
+      "mean": 0.010213459778683869,
+      "std": 0.0031935023688795094,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "strategy_volatility": {
+      "mean": 0.13230622440582676,
+      "std": 0.05124177776954353,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "cumulative_return": {
+      "mean": 0.11923504485080134,
+      "std": 0.08274013702351092,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "max_drawdown": {
+      "mean": 0.0757202437450338,
+      "std": 0.03579543435635386,
+      "valid_folds": 5,
+      "total_folds": 5
+    }
+  },
+  "holdout_accessed": false,
+  "source_hashes": {
+    "src/metrics.py": "1d8fe7139ae9d6dbf2c6becf7d8464522df6a392bbe1a118cc91691d5d14ae44",
+    "src/solution1.py": "203eb0a42d7a232afb1cc27c652430becce437c18d948d7d8777625b58b97c76",
+    "src/validation.py": "36a1f854f8345c2187661faf386def7be0cdb1e197ecab2f74f6898bc57e8692",
+    "src/solution1_tuning.py": "10ce651998e955dfe3993774ec9c2b772ae02b18e4974439cac0bdb3c22833ce",
+    "scripts/tune_solution1.py": "89521306bbd3dfcb55f972471793a93d0fc7a68bd25cca2b503f18336188aa80"
+  }
+}

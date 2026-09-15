@@ -8,6 +8,9 @@ Stage 3 follow-up: the corrected local reproduction of Baseline 1 is implemented
 see [Solution 1 protocol](solution1.md) and the current results in the root README.
 The observations below describe the original files as inspected in Stage 1.
 
+Stage 5 follow-up: [Solution 2 protocol](solution2.md) documents the local online
+repairs and a frozen-model diagnostic control, preserving the original notebook.
+
 ## Baseline 1
 
 Source: `baseline/hull-eda-training-pipeline.ipynb`, cells 8–12.

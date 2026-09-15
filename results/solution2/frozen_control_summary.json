@@ -1,0 +1,109 @@
+{
+  "status": "complete",
+  "smoke": false,
+  "dataset_sha256": "8c1aba83e1bf34f91b234b7979f1fc7c397186b33a8d08bdd3634c08eb3810ca",
+  "holdout": {
+    "status": "not_evaluated_for_solution2",
+    "date_id_start": 8868,
+    "date_id_end": 9047
+  },
+  "window": 800,
+  "ensemble_weights": {
+    "enet": 0.3,
+    "xgb": 0.35,
+    "lgb": 0.35
+  },
+  "top_features": 50,
+  "seed_rule": "42 + 10000*fold + 10*offset + component_index",
+  "elapsed_seconds": 328.4476353150021,
+  "packages": {
+    "Mako": "1.4.1",
+    "MarkupSafe": "3.0.3",
+    "PyYAML": "6.0.3",
+    "Pygments": "2.21.0",
+    "SQLAlchemy": "2.0.54",
+    "alembic": "1.20.0",
+    "cloudpickle": "3.1.2",
+    "colorlog": "6.12.0",
+    "greenlet": "3.5.6",
+    "iniconfig": "2.3.0",
+    "joblib": "1.6.0",
+    "lightgbm": "4.7.0",
+    "narwhals": "2.26.0",
+    "numpy": "2.5.3",
+    "optuna": "5.0.0",
+    "packaging": "26.3",
+    "pandas": "3.0.5",
+    "pip": "24.0",
+    "pluggy": "1.6.0",
+    "pytest": "9.1.1",
+    "python-dateutil": "2.9.0.post0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "threadpoolctl": "3.6.0",
+    "tqdm": "4.70.1",
+    "typing_extensions": "4.16.0",
+    "xgboost-cpu": "3.4.1"
+  },
+  "source_hashes": {
+    "src/solution2.py": "c7f90ef0e794bcaafb63d46e867228087e774aafd285af990fcc14d486ef4336",
+    "src/solution2_search.py": "f198b1557ae487bedb16e21b3a699ac5e5269894e478abb31720670e4f0a48ed",
+    "scripts/reproduce_solution2.py": "764c7d4a549e462ff7045418e76fc0f14d3fe6e7ce283892c7dd81fb061d97b9",
+    "src/metrics.py": "1d8fe7139ae9d6dbf2c6becf7d8464522df6a392bbe1a118cc91691d5d14ae44",
+    "src/validation.py": "36a1f854f8345c2187661faf386def7be0cdb1e197ecab2f74f6898bc57e8692",
+    "baseline/hull-market-prediction-just-improved.ipynb": "c3f7eed7245c00099d457129d660fe5dc9dc22804f0e3f5d89531a0b0ea4a5b8"
+  },
+  "variant": "frozen_control",
+  "cv_metrics": {
+    "adjusted_sharpe": {
+      "mean": 0.318871031465433,
+      "std": 0.7294999040942606,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "raw_sharpe": {
+      "mean": 0.42491566944199277,
+      "std": 0.9364834240032462,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "r2": {
+      "mean": -0.005260508866400259,
+      "std": 0.005379303382179507,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "spearman": {
+      "mean": null,
+      "std": null,
+      "valid_folds": 2,
+      "total_folds": 5
+    },
+    "rmse": {
+      "mean": 0.010248448035374304,
+      "std": 0.0032257092658798192,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "strategy_volatility": {
+      "mean": 0.13878014286589377,
+      "std": 0.04495632876150063,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "cumulative_return": {
+      "mean": 0.07031503408193354,
+      "std": 0.0907377964346035,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "max_drawdown": {
+      "mean": 0.11149957085191624,
+      "std": 0.04106481934669123,
+      "valid_folds": 5,
+      "total_folds": 5
+    }
+  },
+  "description": "Diagnostic control: source's disabled online branch; same corrected startup preprocessing/search."
+}

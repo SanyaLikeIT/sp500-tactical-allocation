@@ -1,0 +1,441 @@
+{
+  "status": "passed",
+  "smoke": false,
+  "prediction_rows_per_variant": 900,
+  "checks": [
+    "source_and_dataset_hashes",
+    "dates_and_target_alignment",
+    "window_and_gap",
+    "inner_search_boundaries",
+    "weighted_predictions",
+    "risk_from_observable_labels",
+    "allocation_recursion",
+    "strategy_returns",
+    "fold_metrics",
+    "summary_metrics",
+    "holdout_exclusion"
+  ],
+  "search_counts": [
+    {
+      "fold": 1,
+      "offset": 0,
+      "model": "xgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 1,
+      "offset": 0,
+      "model": "lgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 1,
+      "offset": 0,
+      "model": "enet",
+      "requested": 20,
+      "completed": 20
+    },
+    {
+      "fold": 1,
+      "offset": 50,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 50,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 50,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 100,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 100,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 100,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 150,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 150,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 1,
+      "offset": 150,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 0,
+      "model": "xgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 2,
+      "offset": 0,
+      "model": "lgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 2,
+      "offset": 0,
+      "model": "enet",
+      "requested": 20,
+      "completed": 20
+    },
+    {
+      "fold": 2,
+      "offset": 50,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 50,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 50,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 100,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 100,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 100,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 150,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 150,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 2,
+      "offset": 150,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 0,
+      "model": "xgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 3,
+      "offset": 0,
+      "model": "lgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 3,
+      "offset": 0,
+      "model": "enet",
+      "requested": 20,
+      "completed": 20
+    },
+    {
+      "fold": 3,
+      "offset": 50,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 50,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 50,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 100,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 100,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 100,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 150,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 150,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 3,
+      "offset": 150,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 0,
+      "model": "xgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 4,
+      "offset": 0,
+      "model": "lgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 4,
+      "offset": 0,
+      "model": "enet",
+      "requested": 20,
+      "completed": 20
+    },
+    {
+      "fold": 4,
+      "offset": 50,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 50,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 50,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 100,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 100,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 100,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 150,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 150,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 4,
+      "offset": 150,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 0,
+      "model": "xgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 5,
+      "offset": 0,
+      "model": "lgb",
+      "requested": 30,
+      "completed": 30
+    },
+    {
+      "fold": 5,
+      "offset": 0,
+      "model": "enet",
+      "requested": 20,
+      "completed": 20
+    },
+    {
+      "fold": 5,
+      "offset": 50,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 50,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 50,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 100,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 100,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 100,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 150,
+      "model": "xgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 150,
+      "model": "lgb",
+      "requested": 10,
+      "completed": 10
+    },
+    {
+      "fold": 5,
+      "offset": 150,
+      "model": "enet",
+      "requested": 10,
+      "completed": 10
+    }
+  ],
+  "extreme_adjusted_sharpe_folds": []
+}

@@ -9,10 +9,13 @@ the same chronological evaluation protocol.
 
 ## Current status
 
-**Stages 1–4 completed.** Solution 1's 30-trial development-only Optuna search
+**Stages 1–5 completed.** Solution 1's 30-trial development-only Optuna search
 improved the selected CV score but **underperformed the baseline on final holdout**.
-The failed improvement is retained. Competition scoring has been verified against
-the official source; 71 tests pass. No holdout values selected configurations, and
+The failed improvement is retained. Solution 2's corrected online ensemble has
+completed five development folds: Adjusted Sharpe **0.216599 ± 1.319487**.
+Its frozen-model diagnostic control scored **0.318871 ± 0.729500**.
+Competition scoring has been verified against
+the official source; 79 tests pass. No holdout values selected configurations, and
 no further search was run after final evaluation.
 The original notebooks and dataset are preserved unchanged.
 
@@ -355,8 +358,111 @@ baseline, not a measured project improvement.
 
 The source also selects features and imputes data before its inner CV. Further
 online-update errors and the minimum reproduction requirements are documented in
-[`docs/baseline_audit.md`](docs/baseline_audit.md). No corrections have been
-implemented in Stage 1.
+[`docs/baseline_audit.md`](docs/baseline_audit.md).
+
+### Local Solution 2 reproduction
+
+[`docs/solution2.md`](docs/solution2.md) specifies all source settings, search
+ranges, seeds, local repairs, and artifact definitions. The primary `baseline`
+restores the intended daily rolling-window fits and searches at prediction offsets
+50, 100, and 150. At date `t`, training and volatility history end at `t-2`.
+Initial medians, missingness filters, top-50 selection, and the V1 median are fixed
+per fold; the scaler and three regressors refit daily on 800 available rows.
+Each outer fold resets model, preprocessing, search, and allocation state.
+
+The `frozen_control` uses the same initial models and corrected preprocessing,
+but keeps model/scaler/target history fixed. It diagnoses the source's disabled
+online branch; it is neither a literal notebook replay nor an improved model.
+Both variants preserve the three model families, five actual derived features,
+original weights, clipping, volatility scaling, and smoothing.
+
+Necessary adaptations are explicit: remove backward filling, fit preprocessing
+and supervised selection separately inside each inner fold, enforce one-row gaps,
+repair online label/date alignment and feature schemas, retain causal I-column
+history, and guard undefined ratios/missing interaction inputs. Only available
+market features are predictors. The source's discarded temporal columns remain
+absent. Tree searches still use unscaled inputs while final fits use scaled inputs,
+matching the source's discrepancy. No new Stage 6 tuning has been applied.
+
+Startup reproduces the author's MSE searches with 30/30/20 trials; each online
+event allows 10 trials per model. Source timeouts are preserved and actual counts
+are saved. Local TPE seeds use `42 + 10000*fold + 10*offset + component_index`;
+model seed is 42. Runs use one CPU thread and XGBoost CPU 3.4.1.
+
+```bash
+.venv/bin/python -m scripts.reproduce_solution2 --smoke --n-jobs 1
+.venv/bin/python -m scripts.reproduce_solution2 --n-jobs 1
+.venv/bin/python -m scripts.check_solution2
+```
+
+Smoke uses 52 sequential rows and two trials per component/search, including the
+offset-50 update. It completed in 11.9 seconds; results are saved separately in
+`results/solution2/smoke/` and are not baseline estimates. The full experiment
+uses the same development intervals as Solution 1: five 180-row folds, 900
+predictions per variant, from the audited 9048-row dataset. Earlier validation
+labels can enter later rolling fits only after the required observation delay.
+Output directories cannot be overwritten; pass a fresh `--output-dir` to repeat.
+
+Results live under [`results/solution2/`](results/solution2/):
+`baseline_summary.json`, `baseline_folds.csv`, `baseline_predictions.csv`, matching
+`frozen_control_*` files, `preprocessing_and_searches.json`, per-fold
+`fold_N_searches.jsonl` checkpoints, `run_status.json`, and `verification.json`.
+They include component predictions, training boundaries, risk estimates, medians,
+selected features, trial results, source hashes, and installed package versions.
+The verification command independently recomputes risk, positions, returns, and
+shared metrics from saved records and checks split and holdout boundaries.
+
+Solution 2 holdout evaluation is deferred until Stage 6 choices are frozen.
+Solution 1's holdout outcome is already known, but does not select settings here;
+the final period cannot be described as blind to the project as a whole.
+
+### Reproduced Baseline 2 results
+
+The full run took **328.4 seconds**, completing all **850/850 trials** across
+60 component studies (five startup events and fifteen online events). No timeout
+reduced a search budget. This required 3350 inner model fits, 2700 sequential
+ensemble-component fits, and 75 feature-selector fits. The frozen control reuses
+each initial fitted ensemble. Both variants have 900 saved predictions.
+
+| Metric | Online baseline CV mean ± sample std | Frozen control CV mean ± sample std |
+|---|---:|---:|
+| Adjusted Sharpe (primary) | 0.216599 ± 1.319487 | 0.318871 ± 0.729500 |
+| Raw geometric Sharpe | -0.182850 ± 1.666914 | 0.424916 ± 0.936483 |
+| R² | -0.006521 ± 0.003502 | -0.005261 ± 0.005379 |
+| Spearman | -0.096924 ± 0.071170 | Undefined across all five folds |
+| RMSE | 0.010258 ± 0.003240 | 0.010248 ± 0.003226 |
+| Annualized strategy volatility | 0.130549 ± 0.033728 | 0.138780 ± 0.044956 |
+| Cumulative return per fold | 0.014771 ± 0.170726 | 0.070315 ± 0.090738 |
+| Maximum drawdown per fold | 0.127424 ± 0.062804 | 0.111500 ± 0.041065 |
+
+| Fold | Validation date_id | Online Adjusted Sharpe | Frozen Adjusted Sharpe |
+|---|---|---:|---:|
+| 1 | 7968–8147 | -0.575268 | -0.395544 |
+| 2 | 8148–8327 | -0.813503 | -0.047199 |
+| 3 | 8328–8507 | 0.208955 | 0.411529 |
+| 4 | 8508–8687 | 2.473460 | 1.515564 |
+| 5 | 8688–8867 | -0.210648 | 0.110005 |
+
+The online ensemble has three negative folds, negative R² and Spearman in every
+fold, and a positive mean primary score dominated by fold 4. Restoring updates
+does not improve mean Adjusted Sharpe over the frozen diagnostic control here.
+The predeclared online variant remains our baseline; the control is not selected
+as a replacement based on these scores. No successful model improvement is claimed.
+
+Frozen predictions are constant in folds 1–3, so their Spearman values are null;
+only two of five folds have a defined correlation. The overall Spearman mean/std
+therefore remain null instead of dropping undefined folds. Position sizing can
+still vary with V1 and smoothing even when the model prediction is constant.
+Raw and adjusted Sharpe means aggregate separately after per-fold penalties;
+penalties also reduce the magnitude of negative scores in the official formula.
+
+Volatility, return and drawdown are fractions. Fold averages are not a compounded
+900-day result. No fold exceeds absolute Adjusted Sharpe 3. The artifact audit
+passed for both variants, and an independent smoke repeat produced byte-identical
+predictions, fold metrics, preprocessing and search logs (six files recorded in
+`results/solution2/smoke/repeat_check.json`). Original notebook/data hashes match
+Stage 1; shared metric/validation code and Solution 1 results remain unchanged.
+Solution 2 holdout performance and improvements have not been evaluated yet.
 
 ## Saved author outputs versus local results
 
@@ -378,12 +484,12 @@ outputs. Full saved best parameters and supporting log lines are in the audit JS
 |---|---|
 | Solution 1 baseline | Complete; CV 0.464577 ± 0.704304; holdout Adjusted Sharpe 0.955166 |
 | Solution 1 improved | Complete; CV 1.007705 ± 0.841936; holdout Adjusted Sharpe 0.431994; improvement not confirmed |
-| Solution 2 baseline | Not run; Stage 5 |
+| Solution 2 baseline | Complete; CV 0.216599 ± 1.319487; holdout deferred |
 | Solution 2 improved | Not run; Stage 6 |
 
 ## Setup and reproducibility
 
-Stages 1–4 use **Python 3.12.3**. Stage 1 still needs only the standard library.
+Stages 1–5 use **Python 3.12.3**. Stage 1 still needs only the standard library.
 Run from the repository root:
 
 ```bash
@@ -395,7 +501,7 @@ executing either notebook. Repeating the command in the same environment produce
 the same audit. The local shell has `python3`; `python` is not available.
 
 `requirements.txt` pins NumPy, pandas, SciPy, scikit-learn, pytest, LightGBM 4.7.0,
-and Optuna 5.0.0 (added in Stage 4).
+Optuna 5.0.0 (added in Stage 4), and XGBoost CPU 3.4.1 (added in Stage 5).
 The local `.venv` was successfully created with the installed `virtualenv` command:
 
 ```bash
@@ -411,12 +517,12 @@ provides the working alternative. On machines with standard venv support,
 `python3 -m venv .venv` can be used to create the environment instead.
 Dependency download requires network access; tests subsequently run offline.
 Only direct dependencies are pinned; all resolved transitive versions are recorded
-in experiment reports. XGBoost and plotting packages will be added when
-their implementation stages begin. Solution 1 training commands are listed above.
+in experiment reports. Plotting packages will be added at their implementation
+stage. Solution 1 and Solution 2 training commands are listed above.
 
 ## Testing
 
-Run `.venv/bin/python -m pytest -q`: **71 tests passed** in Stage 4. Tests cover
+Run `.venv/bin/python -m pytest -q`: **79 tests passed** in Stage 5. Tests cover
 official metric parity, geometric versus arithmetic conventions, penalties,
 R²/Spearman/RMSE, compounding/drawdown, invalid and constant inputs, position bounds,
 row-ID alignment, and nonmutation. Leakage-related checks cover chronological
@@ -429,6 +535,10 @@ parameters, deterministic fitting, and batch-versus-sequential prediction parity
 Stage 4 tests add depth/leaf constraints, inner stopping gaps, outer-target
 perturbation without changes to stopping or predictions, the median-tree rule,
 and guards against evaluating smoke/unfrozen configurations on final holdout.
+Stage 5 adds exact ensemble inputs, safe ratios, train-fitted missingness/medians,
+causal forward filling, the source risk formula, rolling-window boundaries,
+future-target/feature perturbation with real ensemble models, and online-search
+scheduling. Saved-artifact verification covers both adaptive and frozen variants.
 
 The Stage 1 audit also checks dataset integrity. Syntax checks, `pip check`,
 whitespace validation, and repeated artifact generation supplement the test suite.
@@ -442,18 +552,24 @@ docs/baseline_audit.md        Source behavior, bugs, and reproduction constraint
 docs/evaluation.md            Metric definitions, source, edge cases, split policy
 docs/solution1.md             Baseline 1 settings, adaptations, experiment protocol
 docs/solution1_tuning.md      Search ranges, nested stopping, frozen final evaluation
+docs/solution2.md             Ensemble settings, online repairs, author search protocol
 src/metrics.py                Shared competition scorer and diagnostics
 src/validation.py             Development/holdout splits and availability helpers
 src/solution1.py              Baseline 1 features, preprocessing, LightGBM, allocation
 src/solution1_tuning.py       Regularized LightGBM and nested stopping helpers
+src/solution2.py              Ensemble preprocessing, models, risk, and allocation
+src/solution2_search.py       Nested reproduction of original MSE searches
 scripts/audit_project.py     Standard-library data and notebook audit CLI
 scripts/check_evaluation.py  Synthetic reference and split audit CLI
 scripts/reproduce_solution1.py  Baseline 1 development CV and separate smoke run
 scripts/tune_solution1.py     Development-only Optuna search and frozen selection
 scripts/evaluate_solution1.py  Final holdout comparison after configuration freeze
+scripts/reproduce_solution2.py  Sequential ensemble CV and frozen diagnostic control
+scripts/check_solution2.py    Saved predictions, searches, risk, and metric audit
 results/stage1/audit.json    Verified audit and saved external tuning evidence
 results/stage2/               Split boundaries and synthetic verification results
 results/solution1/            Baseline 1 folds, predictions, settings, preprocessing
+results/solution2/            Ensemble CV, search logs, preprocessing, and smoke run
 tests/                       Metric/validation tests and official-score fixtures
 requirements.txt             Dependencies required by implemented project code
 codex_pmdl_master_prompt.txt  User-supplied staged project specification
@@ -465,10 +581,7 @@ README.md                    Living project log
 
 Both notebooks are external Kaggle solutions used as cited baselines. Their local
 paths, metadata, execution timestamps, and hashes are recorded in the audit.
-Both metadata records reference competition source ID 111543. Neither metadata nor
-source cells identify an author or original notebook URL.
-**TODO: obtain and verify the original authors, notebook URLs, and reuse terms.**
-Do not infer attribution from filenames or fabricate links.
+Both metadata records reference competition source ID 111543.
 
 The Kaggle inference runtime, `test.csv`, and serialized model/parameter artifacts
 are absent. The shared scorer now follows the verified public metric version 3;

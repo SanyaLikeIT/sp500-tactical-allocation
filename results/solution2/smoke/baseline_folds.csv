@@ -1,0 +1,2 @@
+fold,validation_start,validation_end,adjusted_sharpe,raw_sharpe,strategy_volatility,market_volatility,cumulative_return,max_drawdown,volatility_penalty,return_penalty,metric_errors,r2,spearman,rmse
+1,7968,8019,1.0573400390477576,2.7602626072097096,0.0186521605938036,0.12048004087280564,0.010760634229290635,0.006985257212094706,1.0,2.6105722901552153,[],-0.010478957508426978,-0.049688380431998636,0.007555446277358556

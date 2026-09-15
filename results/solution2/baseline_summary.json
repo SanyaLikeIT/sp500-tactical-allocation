@@ -1,0 +1,109 @@
+{
+  "status": "complete",
+  "smoke": false,
+  "dataset_sha256": "8c1aba83e1bf34f91b234b7979f1fc7c397186b33a8d08bdd3634c08eb3810ca",
+  "holdout": {
+    "status": "not_evaluated_for_solution2",
+    "date_id_start": 8868,
+    "date_id_end": 9047
+  },
+  "window": 800,
+  "ensemble_weights": {
+    "enet": 0.3,
+    "xgb": 0.35,
+    "lgb": 0.35
+  },
+  "top_features": 50,
+  "seed_rule": "42 + 10000*fold + 10*offset + component_index",
+  "elapsed_seconds": 328.4476353150021,
+  "packages": {
+    "Mako": "1.4.1",
+    "MarkupSafe": "3.0.3",
+    "PyYAML": "6.0.3",
+    "Pygments": "2.21.0",
+    "SQLAlchemy": "2.0.54",
+    "alembic": "1.20.0",
+    "cloudpickle": "3.1.2",
+    "colorlog": "6.12.0",
+    "greenlet": "3.5.6",
+    "iniconfig": "2.3.0",
+    "joblib": "1.6.0",
+    "lightgbm": "4.7.0",
+    "narwhals": "2.26.0",
+    "numpy": "2.5.3",
+    "optuna": "5.0.0",
+    "packaging": "26.3",
+    "pandas": "3.0.5",
+    "pip": "24.0",
+    "pluggy": "1.6.0",
+    "pytest": "9.1.1",
+    "python-dateutil": "2.9.0.post0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "threadpoolctl": "3.6.0",
+    "tqdm": "4.70.1",
+    "typing_extensions": "4.16.0",
+    "xgboost-cpu": "3.4.1"
+  },
+  "source_hashes": {
+    "src/solution2.py": "c7f90ef0e794bcaafb63d46e867228087e774aafd285af990fcc14d486ef4336",
+    "src/solution2_search.py": "f198b1557ae487bedb16e21b3a699ac5e5269894e478abb31720670e4f0a48ed",
+    "scripts/reproduce_solution2.py": "764c7d4a549e462ff7045418e76fc0f14d3fe6e7ce283892c7dd81fb061d97b9",
+    "src/metrics.py": "1d8fe7139ae9d6dbf2c6becf7d8464522df6a392bbe1a118cc91691d5d14ae44",
+    "src/validation.py": "36a1f854f8345c2187661faf386def7be0cdb1e197ecab2f74f6898bc57e8692",
+    "baseline/hull-market-prediction-just-improved.ipynb": "c3f7eed7245c00099d457129d660fe5dc9dc22804f0e3f5d89531a0b0ea4a5b8"
+  },
+  "variant": "baseline",
+  "cv_metrics": {
+    "adjusted_sharpe": {
+      "mean": 0.21659922029472445,
+      "std": 1.3194870837255062,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "raw_sharpe": {
+      "mean": -0.18285032925559377,
+      "std": 1.6669136711311945,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "r2": {
+      "mean": -0.006520665695379924,
+      "std": 0.0035022400578690153,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "spearman": {
+      "mean": -0.09692356759982303,
+      "std": 0.07117002643871315,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "rmse": {
+      "mean": 0.010257894998412485,
+      "std": 0.003240137030081395,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "strategy_volatility": {
+      "mean": 0.13054931350289528,
+      "std": 0.03372790230255285,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "cumulative_return": {
+      "mean": 0.014770890119232643,
+      "std": 0.17072604360390153,
+      "valid_folds": 5,
+      "total_folds": 5
+    },
+    "max_drawdown": {
+      "mean": 0.12742443160668865,
+      "std": 0.06280363501944762,
+      "valid_folds": 5,
+      "total_folds": 5
+    }
+  },
+  "description": "Minimally repaired intended online ensemble."
+}

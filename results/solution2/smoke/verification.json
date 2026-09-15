@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "smoke": true,
+  "prediction_rows_per_variant": 52,
+  "checks": [
+    "source_and_dataset_hashes",
+    "dates_and_target_alignment",
+    "window_and_gap",
+    "inner_search_boundaries",
+    "weighted_predictions",
+    "risk_from_observable_labels",
+    "allocation_recursion",
+    "strategy_returns",
+    "fold_metrics",
+    "summary_metrics",
+    "holdout_exclusion"
+  ],
+  "search_counts": [
+    {
+      "fold": 1,
+      "offset": 0,
+      "model": "xgb",
+      "requested": 2,
+      "completed": 2
+    },
+    {
+      "fold": 1,
+      "offset": 0,
+      "model": "lgb",
+      "requested": 2,
+      "completed": 2
+    },
+    {
+      "fold": 1,
+      "offset": 0,
+      "model": "enet",
+      "requested": 2,
+      "completed": 2
+    },
+    {
+      "fold": 1,
+      "offset": 50,
+      "model": "xgb",
+      "requested": 2,
+      "completed": 2
+    },
+    {
+      "fold": 1,
+      "offset": 50,
+      "model": "lgb",
+      "requested": 2,
+      "completed": 2
+    },
+    {
+      "fold": 1,
+      "offset": 50,
+      "model": "enet",
+      "requested": 2,
+      "completed": 2
+    }
+  ],
+  "extreme_adjusted_sharpe_folds": []
+}

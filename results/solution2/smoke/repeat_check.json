@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "command": ".venv/bin/python -m scripts.reproduce_solution2 --smoke --n-jobs 1 --output-dir /tmp/pmdl-solution2-repeat",
+  "byte_identical_artifacts": [
+    "baseline_predictions.csv",
+    "frozen_control_predictions.csv",
+    "baseline_folds.csv",
+    "frozen_control_folds.csv",
+    "preprocessing_and_searches.json",
+    "fold_1_searches.jsonl"
+  ]
+}

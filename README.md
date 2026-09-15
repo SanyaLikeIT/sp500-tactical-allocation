@@ -9,10 +9,10 @@ the same chronological evaluation protocol.
 
 ## Current status
 
-**Stages 1–2 completed: baseline audit, shared metrics, chronological validation,
-and tests.** No local model training, tuning, real-return scoring, or holdout
-evaluation has been performed. Competition scoring has been verified on synthetic
-fixtures against the official source, with 53 passing tests.
+**Stages 1–3 completed.** The first LightGBM baseline has been reproduced on all
+five development folds. Competition scoring has been verified against the official
+source. The suite now has 63 passing tests.
+No project hyperparameter tuning or final holdout evaluation has been performed.
 The original notebooks and dataset are preserved unchanged.
 
 ## Dataset
@@ -95,8 +95,8 @@ Stage 2 checks and reproducible artifacts:
   source. These are testing evidence, not model-performance measurements.
 
 The check command reads only `date_id` from the real CSV. Holdout returns remain
-unevaluated. Future model stages must enforce train-fitted preprocessing and
-feature construction in addition to these split-level checks.
+unevaluated. Solution 1 adds train-fitted preprocessing and causal temporal-feature
+checks; later model stages must enforce the same principles.
 
 ## External Baseline 1: LightGBM with temporal features
 
@@ -122,7 +122,92 @@ configuration/feature/training/inference cells 8–12 (zero-based).
 
 The source computes medians before CV and uses current-row observations in rolling
 statistics. Training and inference also calculate fallback medians on different
-history lengths. These behaviors require explicit treatment in local reproduction.
+history lengths. The local reproduction explicitly corrects these behaviors.
+
+### Local reproduction protocol
+
+[`src/solution1.py`](src/solution1.py) preserves the author's saved final-fit
+parameters and binary allocation rule. Rolling features are shifted one row,
+medians are fitted only on training data and reused at inference, and full causal
+history preserves forward-fill state. The same 313-feature protocol will be used
+for subsequent baseline-versus-improved comparisons. This is a **methodologically
+corrected reproduction**, not a literal replay of the source's original CV.
+
+There are five independent fits, each with 6917 estimators, depth 8, 2662 leaves,
+learning rate 0.021484317145938295, and seed 42. Other author parameters, every
+local adaptation, and artifact definitions are documented in
+[`docs/solution1.md`](docs/solution1.md). No early stopping or new search is used:
+this follows the author's final deployed fit rather than rerunning its earlier
+Optuna search. The final fit's `subsample_freq=0` default is preserved.
+
+```bash
+.venv/bin/python -m scripts.reproduce_solution1 --smoke --n-jobs 4
+.venv/bin/python -m scripts.reproduce_solution1 --n-jobs 4
+```
+
+The smoke command checks the first fold with 32 trees and saves its results
+separately under `results/solution1/smoke/`. It is not a measured baseline result.
+The full command uses all five development folds and the full estimator count.
+It loads only development rows' feature/target values, checks the original data
+hash, and does not evaluate holdout. Model predictions within each fold are
+batched using causal features; tests verify equivalence to sequential prefixes.
+
+### Reproduced Baseline 1 results
+
+Dataset: the checked 9048-row CSV, with 8868 development rows and 900 out-of-fold
+predictions across five 180-row windows. Four CPU threads; LightGBM 4.7.0; all five
+models completed **6917 boosting iterations**. Full CV took **415.1 seconds** in
+this environment. The commands above reproduce the experiment.
+
+| Metric | CV mean | CV sample std |
+|---|---:|---:|
+| Adjusted Sharpe (primary) | 0.464577 | 0.704304 |
+| Raw geometric Sharpe | 0.676633 | 1.155523 |
+| R² | -0.088330 | 0.033789 |
+| Spearman | 0.052373 | 0.054372 |
+| RMSE | 0.010629 | 0.003187 |
+| Annualized strategy volatility | 0.118188 | 0.041677 |
+| Cumulative return per fold | 0.072467 | 0.071948 |
+| Maximum drawdown per fold | 0.072963 | 0.035470 |
+
+| Fold | Validation date_id | Adjusted Sharpe | R² | Spearman |
+|---|---|---:|---:|---:|
+| 1 | 7968–8147 | 0.262498 | -0.097467 | 0.044538 |
+| 2 | 8148–8327 | 0.440280 | -0.033492 | 0.073292 |
+| 3 | 8328–8507 | 0.113218 | -0.081107 | 0.079710 |
+| 4 | 8508–8687 | 1.662404 | -0.118204 | 0.102026 |
+| 5 | 8688–8867 | -0.155513 | -0.111382 | -0.037703 |
+
+The mean primary score is positive but unstable across periods, with a substantial
+contribution from fold 4 and a negative result on fold 5. R² is negative in every
+fold: squared prediction error exceeds the evaluation-window mean-prediction
+benchmark. Rank correlation is modestly positive on average. This establishes the
+baseline; it is not evidence of a robust improvement or live trading performance.
+No fold exceeds an absolute Adjusted Sharpe of 3.
+
+All return/volatility/drawdown entries are fractions (0.118188 volatility means
+11.8188%). Mean cumulative return and drawdown summarize separate 180-row folds;
+they are not a compounded 900-day return or drawdown. The author's saved Spearman
+0.061565 remains an external result under a different dataset/protocol.
+
+Machine-readable artifacts:
+
+- [`baseline_summary.json`](results/solution1/baseline_summary.json): all metrics,
+  exact parameters, environment, feature names, source hashes, holdout status.
+- [`baseline_folds.csv`](results/solution1/baseline_folds.csv): per-fold diagnostics.
+- [`baseline_predictions.csv`](results/solution1/baseline_predictions.csv): all
+  900 predictions, allocations, targets, and strategy returns for auditing.
+- [`baseline_preprocessing.json`](results/solution1/baseline_preprocessing.json):
+  the medians fitted separately on each training fold.
+- [`run_status.json`](results/solution1/run_status.json): completed, five of five
+  folds. The smoke directory contains the same five artifact types separately.
+
+All saved metrics were recomputed from the persisted predictions and matched
+within numerical tolerance. The independent smoke repeat produced byte-identical
+prediction, fold-metric, and preprocessing files. Dataset and original notebook
+hashes still match Stage 1. **Final holdout metrics are deliberately pending**
+until configuration selection is finished; there has been no holdout prediction
+or scoring and no project Optuna tuning.
 
 ## External Baseline 2: ensemble with volatility-aware allocation
 
@@ -172,14 +257,14 @@ outputs. Full saved best parameters and supporting log lines are in the audit JS
 
 | Local experiment | Status |
 |---|---|
-| Solution 1 baseline | Not run; Stage 3 |
+| Solution 1 baseline | Stage 3 complete; CV Adjusted Sharpe 0.464577 ± 0.704304; holdout deferred |
 | Solution 1 improved | Not run; Stage 4 |
 | Solution 2 baseline | Not run; Stage 5 |
 | Solution 2 improved | Not run; Stage 6 |
 
 ## Setup and reproducibility
 
-Stages 1–2 use **Python 3.12.3**. Stage 1 still needs only the standard library.
+Stages 1–3 use **Python 3.12.3**. Stage 1 still needs only the standard library.
 Run from the repository root:
 
 ```bash
@@ -190,7 +275,8 @@ This validates the supplied dataset and writes `results/stage1/audit.json` witho
 executing either notebook. Repeating the command in the same environment produces
 the same audit. The local shell has `python3`; `python` is not available.
 
-Stage 2 pins NumPy, pandas, SciPy, scikit-learn, and pytest in `requirements.txt`.
+`requirements.txt` pins NumPy, pandas, SciPy, scikit-learn, pytest, and LightGBM
+(4.7.0, added in Stage 3).
 The local `.venv` was successfully created with the installed `virtualenv` command:
 
 ```bash
@@ -206,19 +292,21 @@ provides the working alternative. On machines with standard venv support,
 `python3 -m venv .venv` can be used to create the environment instead.
 Dependency download requires network access; tests subsequently run offline.
 Only direct dependencies are pinned; all resolved transitive versions are recorded
-in the Stage 2 report. LightGBM, XGBoost, Optuna, and plotting packages will be
-added when their implementation stages begin. No training commands exist yet.
+in experiment reports. XGBoost, Optuna, and plotting packages will be added when
+their implementation stages begin. Solution 1 training commands are listed above.
 
 ## Testing
 
-Run `.venv/bin/python -m pytest -q`: **53 tests passed** in Stage 2. Tests cover
+Run `.venv/bin/python -m pytest -q`: **63 tests passed** in Stage 3. Tests cover
 official metric parity, geometric versus arithmetic conventions, penalties,
 R²/Spearman/RMSE, compounding/drawdown, invalid and constant inputs, position bounds,
 row-ID alignment, and nonmutation. Leakage-related checks cover chronological
 order, exact one-row gaps, holdout exclusion, unchanged development data after
 holdout-target perturbation, exclusion of direct return/target predictors, and
-sequential label availability. They do not yet test model preprocessing, which
-will be added with the models.
+sequential label availability. Solution 1 tests additionally verify train-only
+median fitting, invariance to future feature/target changes, past-only lag/rolling
+statistics, all-missing training columns, the 313-feature schema, exact inherited
+parameters, deterministic fitting, and batch-versus-sequential prediction parity.
 
 The Stage 1 audit also checks dataset integrity. Syntax checks, `pip check`,
 whitespace validation, and repeated artifact generation supplement the test suite.
@@ -230,12 +318,16 @@ baseline/                    Original external notebooks; do not modify
 data/train.csv               Supplied dataset; do not modify
 docs/baseline_audit.md        Source behavior, bugs, and reproduction constraints
 docs/evaluation.md            Metric definitions, source, edge cases, split policy
+docs/solution1.md             Baseline 1 settings, adaptations, experiment protocol
 src/metrics.py                Shared competition scorer and diagnostics
 src/validation.py             Development/holdout splits and availability helpers
+src/solution1.py              Baseline 1 features, preprocessing, LightGBM, allocation
 scripts/audit_project.py     Standard-library data and notebook audit CLI
 scripts/check_evaluation.py  Synthetic reference and split audit CLI
+scripts/reproduce_solution1.py  Baseline 1 development CV and separate smoke run
 results/stage1/audit.json    Verified audit and saved external tuning evidence
 results/stage2/               Split boundaries and synthetic verification results
+results/solution1/            Baseline 1 folds, predictions, settings, preprocessing
 tests/                       Metric/validation tests and official-score fixtures
 requirements.txt             Dependencies required by implemented project code
 codex_pmdl_master_prompt.txt  User-supplied staged project specification
@@ -259,3 +351,6 @@ local source inspection, not execution of those two notebooks. Source defects,
 unseeded searches, dataset differences,
 and future library-version differences limit exact reproduction. Methodological
 corrections must be distinguished from model improvements in subsequent stages.
+The inherited LightGBM settings were selected on an external 9021-row history,
+which may overlap today's holdout. Holdout is untouched by local selection;
+complete independence from the external author's choices cannot be asserted.

@@ -1,0 +1,2 @@
+fold,train_start,train_end,train_rows,validation_start,validation_end,validation_rows,feature_count,boosting_iterations,allocation_mean,adjusted_sharpe,raw_sharpe,strategy_volatility,market_volatility,cumulative_return,max_drawdown,volatility_penalty,return_penalty,metric_errors,r2,spearman,rmse
+1,0,7966,7967,7968,8147,180,313,32,0.6166666666666667,0.17224194140869328,0.17224194140869328,0.15853381138405076,0.18405361319648608,0.02123566504890598,0.09024348638752847,1.0,1.0,[],0.01012990603455921,0.06694495957537097,0.011503758244306328

@@ -1,7 +1,8 @@
-# Direct dependencies used by Stage 2 modules, validation CLI, and tests.
-# Validated with Python 3.12.3; resolved environment is recorded in results/stage2/.
+# Direct dependencies used by Stage 3 models, shared evaluation, CLIs, and tests.
+# Validated with Python 3.12.3; resolved environments are recorded in experiment reports.
 numpy==2.5.3
 pandas==3.0.5
 scipy==1.18.1
 scikit-learn==1.9.1
 pytest==9.1.1
+lightgbm==4.7.0

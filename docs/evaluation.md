@@ -127,9 +127,10 @@ uses dates only. `market_feature_columns` restricts raw predictors to the observ
 market feature naming convention, excluding IDs and target/scoring columns.
 These helpers do not enforce how callers subsequently fit models. Future model
 stages must add integration checks for fold-fitted imputation, scaling, supervised
-selection, training-only thresholds, and strictly past temporal features. No such
-preprocessing/model implementation exists in Stage 2, so the current tests do not
-claim to prove end-to-end model leakage freedom.
+selection, training-only thresholds, and strictly past temporal features. Stage 2
+tests alone do not prove end-to-end model leakage freedom. Stage 3 adds train-only
+imputation, past-only temporal features, and prediction causality tests for
+Solution 1; see [Solution 1 protocol](solution1.md).
 
 ## Verification
 

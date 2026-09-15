@@ -4,6 +4,10 @@ Stage 1 static inspection. Cell references are zero-based. Original notebooks ar
 preserved byte-for-byte; no training or reproduction has been run. Machine-readable
 metadata, hashes, and saved metrics are in `results/stage1/audit.json`.
 
+Stage 3 follow-up: the corrected local reproduction of Baseline 1 is implemented;
+see [Solution 1 protocol](solution1.md) and the current results in the root README.
+The observations below describe the original files as inspected in Stage 1.
+
 ## Baseline 1
 
 Source: `baseline/hull-eda-training-pipeline.ipynb`, cells 8–12.

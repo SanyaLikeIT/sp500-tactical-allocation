@@ -1,0 +1,2 @@
+# Stage 1 uses only the Python 3.12 standard library.
+# Add and pin third-party dependencies when their implementation is introduced.

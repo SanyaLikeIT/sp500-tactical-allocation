@@ -1,1 +1,1 @@
-"""Shared evaluation and separate baseline implementations will live here."""
+"""Shared metrics and chronological validation for separate baseline solutions."""

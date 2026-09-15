@@ -1,0 +1,7 @@
+split,train_start,train_end,train_rows,validation_start,validation_end,validation_rows,gap_rows
+development_1,0,7966,7967,7968,8147,180,1
+development_2,0,8146,8147,8148,8327,180,1
+development_3,0,8326,8327,8328,8507,180,1
+development_4,0,8506,8507,8508,8687,180,1
+development_5,0,8686,8687,8688,8867,180,1
+final_holdout_reserved,0,8866,8867,8868,9047,180,1

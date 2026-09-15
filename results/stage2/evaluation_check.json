@@ -1,0 +1,79 @@
+{
+  "stage": 2,
+  "python_version": "3.12.3",
+  "packages": {
+    "Pygments": "2.21.0",
+    "cloudpickle": "3.1.2",
+    "iniconfig": "2.3.0",
+    "joblib": "1.6.0",
+    "narwhals": "2.26.0",
+    "numpy": "2.5.3",
+    "packaging": "26.3",
+    "pandas": "3.0.5",
+    "pip": "24.0",
+    "pluggy": "1.6.0",
+    "pytest": "9.1.1",
+    "python-dateutil": "2.9.0.post0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "source_url": "https://www.kaggle.com/code/metric/hull-competition-sharpe",
+  "source_version": 3,
+  "source_cell_sha256": "19e64d96a713bf31c63cfea45a4416906dbd87ce3e770ed0b2e658460b257d13",
+  "fixture_sha256": "8a98987da5127a4638c535cd97ac946b894562e95e3b5a5513f7f5211d239c7e",
+  "reference_checks": [
+    {
+      "case": "market",
+      "official_score": 2.7649019684972735,
+      "project_score": 2.7649019684973832,
+      "absolute_error": 1.0969003483296547e-13
+    },
+    {
+      "case": "half",
+      "official_score": 0.942895720529061,
+      "project_score": 0.942895720528449,
+      "absolute_error": 6.119549311733863e-13
+    },
+    {
+      "case": "leveraged",
+      "official_score": -0.10950636651787225,
+      "project_score": -0.10950636651787046,
+      "absolute_error": 1.790234627208065e-15
+    },
+    {
+      "case": "cash",
+      "official_score": 0.0,
+      "project_score": 0.0,
+      "absolute_error": 0.0
+    },
+    {
+      "case": "binary",
+      "official_score": 4.205294680713564,
+      "project_score": 4.205294680714222,
+      "absolute_error": 6.581402089977928e-13
+    },
+    {
+      "case": "mixed",
+      "official_score": 3.1075987010158364,
+      "project_score": 3.107598701015876,
+      "absolute_error": 3.952393967665557e-14
+    },
+    {
+      "case": "negative_market",
+      "official_score": -0.24571912648026575,
+      "project_score": -0.24571912648027971,
+      "absolute_error": 1.3961054534661343e-14
+    },
+    {
+      "case": "score_cap",
+      "official_score": 1000000,
+      "project_score": 1000000.0,
+      "absolute_error": 0.0
+    }
+  ],
+  "all_reference_checks_passed": true,
+  "real_data_usage": "date_id only; holdout boundaries recorded, no real returns scored",
+  "local_model_metrics": null
+}
